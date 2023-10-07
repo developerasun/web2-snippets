@@ -6,8 +6,8 @@ export const getApiDocs = async () => {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Next Swagger API Example",
-        version: "1.0",
+        title: "developerasun / web2 / archive",
+        version: "0.1.0",
       },
       components: {
         securitySchemes: {

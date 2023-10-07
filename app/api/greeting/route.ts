@@ -37,3 +37,51 @@ export async function GET(request: Request) {
     }
   );
 }
+
+/**
+ * @swagger
+ * /api/greeting:
+ *   post:
+ *     description: return `who` set `bearer token` `when`
+ *     parameters:
+ *        - in: body
+ *          name: sample random metadata
+ *          schema:
+ *            type: object
+ *            properties:
+ *              who:
+ *                type: string
+ *              time:
+ *                type: string
+ *     responses:
+ *       201:
+ *         description: got post data and logged in app server
+ *       500:
+ *         description: something wrong on app server
+ */
+export async function POST(request: Request) {
+  interface BodyType {
+    time: string;
+    who: string;
+  }
+
+  const { headers } = request;
+  const bearerToken = headers.get("Authorization");
+  const _body = await request.json();
+  const body = _body as unknown as BodyType;
+  const { who, time } = body;
+
+  console.log(`${who} sent this post reqeust at ${time}`);
+
+  return NextResponse.json(
+    {
+      message: "received",
+      author: who,
+      timestamp: time,
+      token: bearerToken,
+    },
+    {
+      status: 201,
+    }
+  );
+}
