@@ -1,0 +1,71 @@
+{
+  "components": {},
+  "info": {
+    "title": "NextJs Swagger Setup Example",
+    "version": "1.0.0",
+    "description": "This is an example of setting up swagger"
+  },
+  "host": "localhost:3000",
+  "basePath": ".",
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Bearer <JWT-TOKEN>"
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ],
+  "apis": [
+    "app/api/**/*.ts"
+  ],
+  "swagger": "2.0",
+  "paths": {
+    "/api/greeting": {
+      "get": {
+        "description": "Returns json placeholder api response and added prop `jake`",
+        "responses": {
+          "200": {
+            "description": "Content-Type, Authorization, x-jake-header header allowed"
+          }
+        }
+      },
+      "post": {
+        "description": "return `who` set `bearer token` `when`",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sample random metadata",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "who": {
+                  "type": "string"
+                },
+                "time": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "got post data and logged in app server"
+          },
+          "500": {
+            "description": "something wrong on app server"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {},
+  "responses": {},
+  "parameters": {},
+  "tags": []
+}

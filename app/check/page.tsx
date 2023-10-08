@@ -24,13 +24,13 @@ export default function Check() {
   }, [isClick]);
 
   return (
-    <React.Fragment>
+    <>
       <button onClick={() => handleAPI()}>api response:</button>
 
       {process.env.NEXT_PUBLIC_TEST && (
         <div>check: {process.env.NEXT_PUBLIC_TEST}</div>
       )}
       <div> {dataResponse}</div>
-    </React.Fragment>
+    </>
   );
 }
