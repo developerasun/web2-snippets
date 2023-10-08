@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  reactStrictMode: false,
+  output: "standalone",
+  // experimental: {
+  //   // serverComponentsExternalPackages: ["next-swagger-doc"],
+  //   // serverActions: true,
+  // },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
