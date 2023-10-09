@@ -8,8 +8,7 @@
     "docker": "docker run -p 3000:3000 web2-client",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "swagger": "swagger-jsdoc -d swaggerDef.js app/api/greeting/route.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@types/node": "20.6.2",
@@ -23,6 +22,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/swagger-ui-react": "^4.18.1"
+    "@types/swagger-ui-react": "^4.18.1",
+    "next-swagger-doc": "^0.4.0"
   }
 }

@@ -13,11 +13,6 @@ import { headers } from "next/headers";
 export async function GET(request: Request) {
   const data = await fetch("https://jsonplaceholder.typicode.com/todos/1");
 
-  const headersList = headers();
-
-  // console.log({ headersList });
-  // console.log("url", request.url);
-
   const { searchParams } = new URL(request.url);
   console.log("data: ", searchParams.get("data"));
   // console.log(new URLSearchParams(searchParams));
@@ -42,17 +37,18 @@ export async function GET(request: Request) {
  * @swagger
  * /api/greeting:
  *   post:
- *     description: return `who` set `bearer token` `when`
- *     parameters:
- *        - in: body
- *          name: sample random metadata
- *          schema:
- *            type: object
- *            properties:
- *              who:
- *                type: string
- *              time:
- *                type: string
+ *     summary: return `who` set `bearer token` `when`
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                time:
+ *                  type: string
+ *                who:
+ *                  type: string
  *     responses:
  *       201:
  *         description: got post data and logged in app server
@@ -67,21 +63,38 @@ export async function POST(request: Request) {
 
   const { headers } = request;
   const bearerToken = headers.get("Authorization");
-  const _body = await request.json();
-  const body = _body as unknown as BodyType;
-  const { who, time } = body;
 
-  console.log(`${who} sent this post reqeust at ${time}`);
+  try {
+    const _body = await request.json();
+    const body = _body as unknown as BodyType;
+    const { who, time } = body;
 
-  return NextResponse.json(
-    {
-      message: "received",
-      author: who,
-      timestamp: time,
-      token: bearerToken,
-    },
-    {
-      status: 201,
-    }
-  );
+    console.log(`${who} sent this post request at ${time}`);
+    return NextResponse.json(
+      {
+        message: "received",
+        author: who,
+        timestamp: time,
+        token: bearerToken,
+      },
+      {
+        status: 201,
+      }
+    );
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      {
+        message: "wrong",
+        author: "",
+        timestamp: "",
+        token: null,
+      },
+      {
+        status: 404,
+      }
+    );
+  } finally {
+    console.log("Request process done");
+  }
 }
