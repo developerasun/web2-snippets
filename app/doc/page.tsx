@@ -1,13 +1,33 @@
 "use client";
-import React from "react";
+
+import { useEffect, useState } from "react";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
-export default function Docs() {
+type SwaggerProps = {
+  spec: Record<string, any>;
+};
+
+function ReactSwagger({ spec }: SwaggerProps) {
+  return <SwaggerUI spec={spec} />;
+}
+
+export default function IndexPage() {
+  const [swaggerSpec, setSwaggerSpec] = useState<SwaggerProps>({ spec: {} });
+
+  useEffect(() => {
+    async function _getApiDoc() {
+      const response = await fetch("api/doc");
+      const { spec } = await response.json();
+      setSwaggerSpec(spec);
+    }
+
+    _getApiDoc();
+  }, []);
+
   return (
-    <>
-      <SwaggerUI url="/swagger.json" />
-    </>
+    <section className="container">
+      <ReactSwagger spec={swaggerSpec} />
+    </section>
   );
-  // return <SwaggerUI url="/swagger.json" />;
 }
